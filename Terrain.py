@@ -12,17 +12,18 @@ class Terrain:
         self.largeur = 0
         self.hauteur = 0
         self.cases = []
+        self.entree = (0,0)
 
     def charger(self, fichier):
         self.cases.clear()
         with open(fichier, "r") as f:
             ligne_max = 0
+            y = 0
             for ligne in f:
                 ligne = list(ligne)[:-1]
                 ligne_cases = []
                 n = 0
                 for c in ligne:
-                    n += 1
                     if c == " ":
                         ligne_cases.append(Case.OBSTACLE)
                     elif c == "C":
@@ -31,9 +32,14 @@ class Terrain:
                         ligne_cases.append(Case.VIDE)
                     elif c == "E":
                         ligne_cases.append(Case.ENTREE)
+                        self.entree = (n,y)
+                        print(self.entree)
                     else:
                         ligne_cases.append(Case.OBSTACLE)
+                    n += 1
                 self.cases.append(ligne_cases)
+                y += 1 
+                
                 if ligne_max < n:
                     ligne_max = n
         for i, l in enumerate(self.cases):
@@ -53,20 +59,20 @@ class Terrain:
                     clients.append((i, j))
         return clients
 
-    def get_entree(self) -> tuple[int, int]:
-        # TODO
-        return None
+    def get_entree(self) -> tuple[int, int]: 
+        return self.entree
+        
 
     def afficher(self):
         for l in self.cases:
             for c in l:
                 if c == Case.OBSTACLE:
                     print("X", end="")
-                if c == Case.CLIENT:
+                elif c == Case.CLIENT:
                     print("C", end="")
-                if c == Case.VIDE:
+                elif c == Case.VIDE:
                     print("~", end="")
-                if c == Case.ENTREE:
+                elif c == Case.ENTREE:
                     print("E", end="")
                 else:
                     print(" ", end="")

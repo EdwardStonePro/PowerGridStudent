@@ -2,6 +2,8 @@
 import unittest
 import xmlrunner
 
+from pathlib import Path
+
 from Terrain import Terrain, Case
 
 class TestTerrain(unittest.TestCase):
@@ -12,14 +14,13 @@ class TestTerrain(unittest.TestCase):
 
     def test_get_entree(self):
         t = Terrain()
-        t.cases = [
-                [Case.VIDE, Case.VIDE, Case.ENTREE],
-                [Case.CLIENT, Case.CLIENT, Case.CLIENT],
-        ]
+        chemin_terrain = Path(__file__).parent / "terrains" / "t3.txt"
+        
+        t.charger(str(chemin_terrain))
         entree = t.get_entree()
         self.assertIsNotNone(entree)
-        self.assertEqual(entree[0], 0)
-        self.assertEqual(entree[1], 2)
+        self.assertEqual(entree[1], 0)
+        self.assertEqual(entree[0], 2)
 
     def test_accesseur(self):
         t = Terrain()
