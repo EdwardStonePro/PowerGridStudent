@@ -14,7 +14,7 @@ class TestTerrain(unittest.TestCase):
 
     def test_get_entree(self):
         t = Terrain()
-        chemin_terrain = Path(__file__).parent / "terrains" / "t3.txt"
+        chemin_terrain = Path(__file__).parent.parent / "terrains" / "t3.txt"
         
         t.charger(str(chemin_terrain))
         entree = t.get_entree()
